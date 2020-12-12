@@ -1,13 +1,15 @@
-const express = require('express');
-const path = require('path');
+import express from 'express'
+import path from 'path'
 
-const homeRouter = require('./routes/home');
-const blogRouter = require('./routes/blog');
-const contactRouter = require('./routes/contact');
-const aboutRouter = require('./routes/about')
+import homeRouter from './routes/home.js'
+import blogRouter from './routes/blog.js'
+import contactRouter from './routes/contact.js'
+import aboutRouter from './routes/about.js'
 
 const server = express();
-server.use(express.static(path.join(__dirname, 'public')));
+server.use(express.static(path.join(process.cwd(), 'public')));
+server.set('views', path.join(process.cwd(), "views"));
+server.set('view engine', 'ejs');
 
 server.use("/", homeRouter);
 server.use('/about', aboutRouter)
