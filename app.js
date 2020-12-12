@@ -8,6 +8,8 @@ const aboutRouter = require('./routes/about')
 
 const server = express();
 server.use(express.static(path.join(__dirname, 'public')));
+server.set('views', path.join(__dirname, 'views'));
+server.set('view engine', 'ejs');
 
 server.use("/", homeRouter);
 server.use('/about', aboutRouter)
