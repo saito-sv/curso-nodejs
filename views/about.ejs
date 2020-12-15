@@ -4,20 +4,25 @@
 <%- include('./include/head.ejs') %>
 
   <body>
-    <div class="uk-cover-container uk-height-medium">
-      <img src="img/header.svg" alt="" uk-cover>
-      <nav class="uk-navbar-container" uk-navbar>
-        <div class="uk-navbar-left">
-          <a class="uk-navbar-item uk-logo" href="home"><img src="img/logo.svg"></a>
-          <ul class="uk-navbar-nav">
-            <li><a href="/">Home</a></li>
-            <li class="uk-active"> <a href="about">About</a></li>
-            <li> <a href="blog">Blog</a></li>
-            <li><a href="contact">Contact</a></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
+    <%- include('./include/navbar.ejs') %>
+      <div class="uk-container">
+        <section class="uk-text-center" uk-grid>
+          <div class="uk-width-1-2@m">
+            <img src="img/profile.svg" />
+          </div>
+          <div class="uk-width-1-2@m">
+            <h2 class="uk-heading-small .uk-heading-small">Hello There My Name is Marlon Monroy And
+              I Love To Talk.</h2>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+              tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+              tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+              tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+          </div>
+        </section>
+      </div>
   </body>
 
 </html>

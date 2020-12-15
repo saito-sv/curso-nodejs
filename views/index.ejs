@@ -3,8 +3,18 @@
 <%- include('./include/head.ejs') %>
 
   <body>
-    <%- include('./include/navbar.ejs') %>
-
+    <nav class="uk-navbar-container" uk-navbar>
+      <div class="uk-navbar-left">
+        <a class="uk-navbar-item uk-logo" href="home"><img src="img/logo.svg"></a>
+        <ul class="uk-navbar-nav">
+          <li class="uk-active"><a href="/">Home</a></li>
+          <li> <a href="about">About</a></li>
+          <li> <a href="blog">Blog</a></li>
+          <li><a href="contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="uk-container">
       <section class="uk-text-center" uk-grid>
         <div class="uk-width-1-2@m">
           <h1 class="uk-heading-small header-text">Dreams of unique ideas
@@ -17,16 +27,14 @@
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
             tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
         </div>
-        <div class="uk-width-1-2@m profile-section">
-          <img src="img/low-bg.png" />
+        <div class="uk-width-1-2@m">
+          <img src="img/typewriter.svg" />
         </div>
 
       </section>
-
-      <div class="uk-container">
-        <div class="uk-card uk-card-default uk-card-body">
-        </div>
+      <div class="uk-card uk-card-default uk-card-body">
       </div>
+    </div>
   </body>
 
 </html>
