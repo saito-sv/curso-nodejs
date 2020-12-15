@@ -1,5 +1,9 @@
-
 export const renderContact = (req, res) => {
   res.render("contact.ejs", { path: "Contact" });
 }
-export default { renderContact }
+
+const contact = (req, res) => {
+  res.send(req.body);
+}
+
+export default { renderContact, contact }

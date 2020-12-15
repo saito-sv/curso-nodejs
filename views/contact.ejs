@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/uikit.min.css">
   <script src="js/uikit.min.js"></script>
-  <title><%= path %> </title>
+  <title>
+    <%= path %>
+  </title>
 </head>
 
 <body>
@@ -24,6 +26,31 @@
       </div>
     </nav>
   </div>
+
+  <div class="uk-container">
+    <div class="uk-card uk-card-default uk-card-body">
+      <form method="POST" action="contact">
+        <fieldset class="uk-fieldset">
+          <legend class="uk-legend">First Name</legend>
+          <div class="uk-margin">
+            <input class="uk-input" name="primerNombre" type="text" placeholder="nombre">
+          </div>
+          <legend class="uk-legend">Last name</legend>
+          <div class="uk-margin">
+            <input class="uk-input" name="segundoNombre" type="text" placeholder="Input">
+          </div>
+          <legend class="uk-legend">Message</legend>
+          <div class="uk-margin">
+            <textarea class="uk-textarea" name="mensaje" rows="5" placeholder="Textarea"></textarea>
+          </div>
+          <div class="uk-margin">
+            <button type="submit" class="uk-button uk-button-primary">Send</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
 </body>
 
 </html>
