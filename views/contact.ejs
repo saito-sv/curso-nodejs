@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('./include/head.ejs') %>
+
+  <body>
+    <%- include('./include/navbar.ejs') %>
+      <div class="uk-container offset">
+        <div class="uk-card uk-card-default uk-card-body">
+          <h1 class="uk-heading-small uk-center-top">Please enter your information</h1>
+          <form method="POST" action="contact">
+            <fieldset class="uk-fieldset">
+              <legend class="uk-legend">First Name</legend>
+              <div class="uk-margin">
+                <input class="uk-input" name="primerNombre" type="text" placeholder="nombre">
+              </div>
+              <legend class="uk-legend">Last name</legend>
+              <div class="uk-margin">
+                <input class="uk-input" name="segundoNombre" type="text" placeholder="Input">
+              </div>
+              <legend class="uk-legend">Message</legend>
+              <div class="uk-margin">
+                <textarea class="uk-textarea" name="mensaje" rows="5" placeholder="Textarea"></textarea>
+              </div>
+              <div class="uk-margin">
+                <button type="submit" class="uk-button uk-button-primary">Send</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+
+  </body>
+
+</html>
