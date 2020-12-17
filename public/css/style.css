@@ -31,3 +31,6 @@ margin-right: 10px;
   border-color: #FF5300 !important;
   margin-right: 10px;
 }
+.offset {
+  margin-top: -80px !important;
+}

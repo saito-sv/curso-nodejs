@@ -32,7 +32,16 @@
         </div>
 
       </section>
-      <div class="uk-card uk-card-default uk-card-body">
+      <div class="uk-card uk-card-default" uk-grid>
+        <div class="uk-width-1-2@m">
+          <h1 class="uk-card-title">Latest Posts</h1>
+        </div>
+        <div class="uk-width-1-2@m">
+          <button class="uk-button button-primary uk-position-top-right">All</button>
+        </div>
+        <div class="uk-card uk-card-default uk-card-body uk-width-3-3@m">
+          <%- include('./include/blog/item', {title:"Latest", body:"Some post"}) %>
+        </div>
       </div>
     </div>
   </body>
