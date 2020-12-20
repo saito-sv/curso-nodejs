@@ -1,16 +1,20 @@
 .header-text { 
   margin-top: 60px;
 }
+
 .profile-section { 
   background-color: #FAFAFA;
 }
+
 .uk-navbar-left, .uk-navbar-container{ 
   background-color:none !important;
   background:none !important;
 }
+
 .uk-container { 
   padding-top: 20px;
 }
+
 .uk-cover { 
   z-index: -1;
 }
@@ -19,7 +23,7 @@
   background-color:#FF5300 !important; 
   color: #fff;
   border-radius: 3px;
-margin-right: 10px;
+  margin-right: 10px;
 }
 
 .button-secondary { 
@@ -31,6 +35,19 @@ margin-right: 10px;
   border-color: #FF5300 !important;
   margin-right: 10px;
 }
+
 .offset {
   margin-top: -80px !important;
+}
+
+.primar-color-username { 
+  color: #FF5300;
+  font-weight: 500;
+}
+.post-item-left-bar {
+  position: absolute;
+  left: 1px;
+  height: 45px;
+  width: 3px;
+  background-color:#FF5300;
 }

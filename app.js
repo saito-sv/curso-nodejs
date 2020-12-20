@@ -10,7 +10,9 @@ import aboutRouter from './routes/about.js'
 dotenv.config()
 connectDB()
 const server = express();
+
 server.use(express.static(path.join(process.cwd(), 'public')));
+
 server.set('views', path.join(process.cwd(), "views"));
 server.set('view engine', 'ejs');
 
