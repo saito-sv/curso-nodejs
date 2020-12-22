@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('./include/head.ejs') %>
+  
+  <body>
+    <!-- include the navigation partial -->
+    <%- include('./include/navbar.ejs') %>
+    <% if (errorMessage) { %>
+      
+<div class="uk-alert-danger" uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p><%- errorMessage.message %></p>
+</div>      
+    <% } %>
+
+      <div class="uk-container">
+        <div class="uk-card uk-card-default uk-card-body">
+          <h1 class="uk-heading-small uk-center-top">Create an account</h1>
+          <form method="POST" action="auth/register">
+            <fieldset class="uk-fieldset">
+              <legend class="uk-legend">Name</legend>
+              <div class="uk-margin">
+                <input class="uk-input" name="fullname" type="text" placeholder="Enter first and last name">
+              </div>
+              <legend class="uk-legend">Email</legend>
+              <div class="uk-margin">
+                <input class="uk-input" name="email" type="email" rows="5" placeholder="Enter your email">
+              </div>
+              <legend class="uk-legend">Password</legend>
+              <div class="uk-margin">
+                <input class="uk-input" name="password" type="password" rows="5" placeholder="Enter your Password">
+              </div>
+
+              <div class="uk-margin">
+                <button type="submit" class="uk-button  button-primary">Register</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+  </body>
+
+</html>
