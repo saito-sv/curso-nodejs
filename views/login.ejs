@@ -9,13 +9,9 @@
   
       <div class="uk-container">
         <div class="uk-card uk-card-default uk-card-body">
-          <h1 class="uk-heading-small uk-center-top">Create an account</h1>
-          <form method="POST" action="register">
+          <h1 class="uk-heading-small uk-center-top">Login</h1>
+          <form method="POST" action="login">
             <fieldset class="uk-fieldset">
-              <legend class="uk-legend">Name</legend>
-              <div class="uk-margin">
-                <input class="uk-input" name="fullname" type="text" placeholder="Enter first and last name">
-              </div>
               <legend class="uk-legend">Email</legend>
               <div class="uk-margin">
                 <input class="uk-input" name="email" type="email" rows="5" placeholder="Enter your email">
@@ -26,12 +22,12 @@
               </div>
 
               <div class="uk-margin">
-                <button type="submit" class="uk-button  button-primary">Register</button>
+                <button type="submit" class="uk-button  button-primary">Login</button>
               </div>
             </fieldset>
           </form>
           Or 
-          <button class="uk-button  button-primary"><a href="/auth/login">Login</a></button>
+          <button class="uk-button  button-primary"><a href="/auth/register">Register</a></button>
         </div>
 
       </div>
