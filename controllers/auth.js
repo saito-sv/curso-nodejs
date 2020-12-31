@@ -1,5 +1,6 @@
 import {User} from '../models/user.js'
 import bcrypt from 'bcrypt'
+import {sendVerificationEmail} from '../services/mailer.js'
 
 export const renderRegister = (req, res) => {
     res.render("registration.ejs", { path: "Registration" });
@@ -28,7 +29,8 @@ export const register =(req, res) => {
     const [firstName, lastName]  = fullname.split(' ')
     hashPassword(password, res, (hash)=> {
       const newUser = new User({firstName:firstName, lastName:lastName, email:email, password:hash})
-      newUser.save().then((user) => {
+      newUser.save().then(user => {
+        sendVerificationEmail(user)
         return res.redirect('/');
      })
      .catch(err => {
