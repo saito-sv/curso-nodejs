@@ -2,6 +2,7 @@ import {User} from '../models/user.js'
 import bcrypt from 'bcrypt'
 import {sendVerificationEmail} from '../services/mailer.js'
 
+
 export const renderRegister = (req, res) => {
     res.render("registration.ejs", { path: "Registration" });
   }
@@ -30,11 +31,16 @@ export const register =(req, res) => {
     hashPassword(password, res, (hash)=> {
       const newUser = new User({firstName:firstName, lastName:lastName, email:email, password:hash})
       newUser.save().then(user => {
-        sendVerificationEmail(user)
-        return res.redirect('/');
+        req.session.userId = user._id
+        req.session.save(err =>{
+           if(!err) { 
+            sendVerificationEmail(user)
+            return res.redirect('/');
+           }
+        });
+      
      })
      .catch(err => {
-         console.log(err);
          res.status(500).json({message:{message: "Invalid Email"}});
      })
     })
@@ -56,20 +62,6 @@ export const register =(req, res) => {
     .catch(err => {
         return res.status(400).json({message:"Invalid Credentials"});
     })
-
-    // User.findOne({email:email}, (err, user)=> {
-    //   if(user) { 
-    //     bcrypt.compare(password, user.password, (err, isValid)=> {
-    //       console.log(err, isValid)
-    //       if (isValid) { 
-    //        return res.redirect('/')
-    //       }else { 
-    //         return res.status(400).send({message:"Invalid Credentiasl"})
-    //       }
-    //     })
-    //   }
-      
-    // })
 
   }
 

@@ -7,11 +7,15 @@ import blogRouter from './routes/blog.js'
 import contactRouter from './routes/contact.js'
 import aboutRouter from './routes/about.js'
 import authRouter from './routes/auth.js'
-
+import session from 'express-session'
 dotenv.config()
 connectDB()
 
 const server = express();
+
+server.use(session({
+    secret:"kjasdhf234"
+}));
 
 server.use(express.static(path.join(process.cwd(), 'public')));
 
