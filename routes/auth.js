@@ -5,11 +5,8 @@ import bodyParser from 'body-parser'
 const router = express.Router()
 router.use(bodyParser.urlencoded({ extended: true }));
 
-router.get('/', controller.renderRegister);
-router.get('/login',controller.renderLogin);
-router.get('/register', controller.renderRegister)
-
 router.post('/register', controller.register);
 router.post('/login', controller.login);
+router.get('/verify', controller.verifyEmail);
 
 export default router

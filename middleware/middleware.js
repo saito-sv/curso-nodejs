@@ -10,3 +10,14 @@ export const parseBody = (req, res, next) => {
   })
 
 }
+
+export const protectedMid = (req, res, next) => { 
+  if (!req.session) { 
+    return res.status(401).redirect('/');
+  }
+
+  if (req.session.userId !== "") { 
+      next();
+  }
+  
+}

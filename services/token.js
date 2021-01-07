@@ -21,10 +21,11 @@ export const newToken = (key) => {
 export const verify = (token) => {
     const decoded = Buffer.from(token, 'base64').toString()
     const [hash, key, timestamp] = decoded.split(delimiter);
-
+       
     if (timestamp + maxAgeMinutes > Date.now()) { 
         return {valid:false, key:null}
     }
+    
     const toCompare = crypto.createHmac('sha256',tokenSecret).update(key+timestamp).digest('hex');
     const valid = toCompare === hash
     return{valid,key}
