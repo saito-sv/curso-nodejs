@@ -2,23 +2,11 @@ import {User} from '../models/user.js'
 import bcrypt from 'bcrypt'
 import {sendVerificationEmail} from '../services/mailer.js'
 
-
-export const renderRegister = (req, res) => {
-    res.render("registration.ejs", { path: "Registration" });
-  }
-
-  export const renderLogin = (req, res) => {
-    res.setHeader('Set-Cookie',"loggedIn=true;");
-    res.render("login.ejs", { path: "Login" });
-  }
-  
   const hashPassword = (password, res, callback) => { 
       bcrypt.hash(password,10, (error, hash) => {
         if (error) {
-          console.log(err); 
           return res.status(500).send({error: "Something went wront"})
         }else { 
-            console.log(hash)
              callback(hash); 
         }
      
@@ -35,7 +23,6 @@ export const register =(req, res) => {
         req.session.save(err =>{
            if(!err) { 
             sendVerificationEmail(user)
-            return res.redirect('/');
            }
         });
       
@@ -65,4 +52,8 @@ export const register =(req, res) => {
 
   }
 
-  export default { renderRegister, renderLogin, register, login }
+  export const verifyEmail = (req, res) => { 
+   
+  }
+
+  export default { register, login, verifyEmail}
