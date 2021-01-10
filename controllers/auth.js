@@ -2,20 +2,14 @@ import {User} from '../models/user.js'
 import bcrypt from 'bcrypt'
 import {sendVerificationEmail} from '../services/mailer.js'
 
-  const hashPassword = (password, res, callback) => { 
-      bcrypt.hash(password,10, (error, hash) => {
-        if (error) {
-          return res.status(500).send({error: "Something went wront"})
-        }else { 
-             callback(hash); 
-        }
-     
-      });
-  }
   
+export const refreshToken = (req, res) => { 
+  return res.json({})
+} 
+
 export const register =(req, res) => {
-    const {fullname, email, password} = req.body;
-    const [firstName, lastName]  = fullname.split(' ')
+    const {firstName, lastName, email, password} = req.body;
+
     hashPassword(password, res, (hash)=> {
       const newUser = new User({firstName:firstName, lastName:lastName, email:email, password:hash})
       newUser.save().then(user => {
@@ -43,7 +37,7 @@ export const register =(req, res) => {
 
     User.findByEmailAndComparePassword(email, password).then(({isValid, user}) =>{
       if (isValid) { 
-        res.redirect('/')
+        res.json({success:true})
       }
     })
     .catch(err => {
