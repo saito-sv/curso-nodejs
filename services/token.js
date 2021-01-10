@@ -4,9 +4,7 @@ import crypto from 'crypto';
 const tokenSecret = "q6hE6NIiy5hUhg3pGcw"
 const delimiter = "||"
 
-const seconds = 1000 * 60
-const minute = seconds * 60
-const maxAgeMinutes = minute * 120
+const maxAgeMinutes = 120
 
 export const newToken = (key) => {
     const hash = crypto.createHmac("sha256",tokenSecret);
@@ -21,8 +19,8 @@ export const newToken = (key) => {
 export const verify = (token) => {
     const decoded = Buffer.from(token, 'base64').toString()
     const [hash, key, timestamp] = decoded.split(delimiter);
-       
-    if (timestamp + maxAgeMinutes > Date.now()) { 
+    
+    if ((Date.now() - timestamp)/1000/60 > maxAgeMinutes) { 
         return {valid:false, key:null}
     }
     
