@@ -1,55 +1,59 @@
 import bcrypt from "bcrypt"
 import queryer  from '../storage/queryer.js'
 
-export const User = { 
-        userId:"",
-        firstName:"",
-        lastName:"",
-        email:"",
-        emailVerified:false,
-        password:"",
-        imageUrl:""
-      }
+export default class User { 
 
-User.isPasswordValid = async function(plainText) { 
-        const isValid = await bcrypt.compare(textPassword, this.password)
-        return isValid
-}
-
-User.values = () => { 
-    return [this.firstName, this.lastName, this.email, this.password, this.emailVerified]
-}
-
-User.save = () => {
-    queryer.exec('INSERT INTO user(firstname, lastname, email, password, email_verified) VALUES($1,$2,$3,$4,$5) RETURNING *',
-     [...this.values]).then(res => {}).catch(err =>{})
-}
-
-User.hashPassword = (password, res, callback) => { 
-    bcrypt.hash(password,10, (error, hash) => {
-      if (error) {
-        return res.status(500).send({error: "Something went wront"})
-      }else { 
-           callback(hash); 
-      }
-   
-    });
+  constructor(firstName, lastName, email, password) { 
+    this.firstName = firstName
+    this.lastName = lastName
+    this.email = email
+    this.password = password
   }
 
-const findByEmailAndComparePassword = (email,textPassword) => {
-    return new Promise((resolve, reject) => {
-        this.findOne({ email: email })
-            .then((user) => {
-                bcrypt.compare(textPassword, user.password).then(isValid => {
-                resolve({isValid:isValid, user: user});     
-                }).catch(err => {
-                    reject(err);
-                })
-            })
-            .catch((err) => {
-                reject(err)
-            });
-    });
-};
+  hashPassword = textPlain => { 
+    return bcrypt.hashSync(textPlain, 8)
+  }
 
+  values = () => { 
+    return [this.firstName, this.lastName, this.email, this.hashPassword(this.password)]
+  }
 
+  save = async () => { 
+    try { 
+      const res = await queryer.exec('INSERT INTO monroy_user(first_name, last_name, email, password) VALUES($1, $2, $3,$4) RETURNING *', ...this.values())
+       return User.hydrate(res.rows).pop()
+    }catch(err) { 
+      return err
+    }
+  }
+
+  static hydrate = rows => { 
+    return rows.map(r => {
+      return {id:r.id, firstName:r.first_name, lastName:r.last_name, email:r.email, modified:r.modified, created:r.created, emailVerified:r.email_verified}
+    })
+  }
+  
+  static isPasswordValid = async (password, hash) => { 
+    try { 
+      const valid = await bcrypt.compare(password, hash)
+      return valid
+    } catch(err) { 
+      return err 
+    }
+  }
+
+  static deleteById = async id => { 
+    
+  }
+
+  static findByEmailAndComparePassword = async (email, password) => { 
+    try { 
+      const res = await queryer.exec('SELECT * FROM monroy_user WHERE email = $1', email)
+      if(res.rowCount === 0) return {valid: false, found:false, user:null};
+       const valid = this.isPasswordValid(password, res.rows[0].password)
+       return {valid:valid, found:true, user:this.hydrate(res.rows).pop()}
+    } catch (err) { 
+      return err
+    }
+  }
+}
