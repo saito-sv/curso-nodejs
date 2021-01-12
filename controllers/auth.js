@@ -1,49 +1,41 @@
-import {User} from '../models/user.js'
-import bcrypt from 'bcrypt'
+import User from '../models/user.js'
+
 import {sendVerificationEmail} from '../services/mailer.js'
+import { newAuthToken } from '../services/token.js'
 
   
 export const refreshToken = (req, res) => { 
   return res.json({})
 } 
 
-export const register =(req, res) => {
+export const register  = async (req, res) => {
     const {firstName, lastName, email, password} = req.body;
-
-    hashPassword(password, res, (hash)=> {
-      const newUser = new User({firstName:firstName, lastName:lastName, email:email, password:hash})
-      newUser.save().then(user => {
-        req.session.userId = user._id
-        req.session.save(err =>{
-           if(!err) { 
-            sendVerificationEmail(user)
-           }
-        });
-      
-     })
-     .catch(err => {
-         res.status(500).json({message:{message: "Invalid Email"}});
-     })
-    })
-
+    const userToSave = new User(firstName, lastName, email, password)
+    try { 
+      const savedUser = await userToSave.save();
+      sendVerificationEmail(savedUser)
+      return res.send({user:savedUser, token:newAuthToken(savedUser.id)})
+    } catch (err) { 
+      return res.status(500).send({status:"error", message:"Something went wrong"})
+    }
 } 
 
-  export const login = (req,res)=>{
+  export const login = async (req,res)=>{
     const {email, password} = req.body;
     if(email === "" || password === ""){
      return res.status(400).send({message:"Invalid Credentials"})
      
     }
 
-    User.findByEmailAndComparePassword(email, password).then(({isValid, user}) =>{
-      if (isValid) { 
-        res.json({success:true})
-      }
-    })
-    .catch(err => {
-        return res.status(400).json({message:"Invalid Credentials"});
-    })
+    try { 
+      const {valid, found, user} = await User.findByEmailAndComparePassword(email, password)
+      if(!valid) return res.status(400).send({status:"error", message:"Invalid credentials"});
+      if(!found) return res.status(404).send({status:"error", message:"User not found"});
+      return res.send({user:user, token:newAuthToken(user.id)})
 
+    } catch( err) { 
+      return res.status(500).send({status:"error", message:"Something went wrong"})
+    }
   }
 
   export const verifyEmail = (req, res) => { 

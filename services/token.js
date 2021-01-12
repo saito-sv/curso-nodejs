@@ -1,5 +1,6 @@
 
 import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
 
 const tokenSecret = "q6hE6NIiy5hUhg3pGcw"
 const delimiter = "||"
@@ -27,4 +28,19 @@ export const verify = (token) => {
     const toCompare = crypto.createHmac('sha256',tokenSecret).update(key+timestamp).digest('hex');
     const valid = toCompare === hash
     return{valid,key}
+}
+
+export const newAuthToken = userId => { 
+    const auth = jwt.sign({role:"auth", userId}, tokenSecret, {expiresIn:"1h"});
+    const refresh = jwt.sign({role:"refresh", userId}, tokenSecret, { expiresIn: "7d"});
+    return {auth, refresh}
+}
+
+export const verifyAuthToken = token => { 
+    try { 
+        const decoded = jwt.verify(token, tokenSecret)
+        return {error:null, decoded:decoded}
+    } catch (err) { 
+        return {error:err, decoded: null}
+    }
 }
