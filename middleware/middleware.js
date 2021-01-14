@@ -1,3 +1,5 @@
+import { verifyAuthToken} from '../services/token.js'
+
 export const parseBody = (req, res, next) => {
   let datos = ''
   req.on('data', pedazoDeDatos => {
@@ -12,12 +14,11 @@ export const parseBody = (req, res, next) => {
 }
 
 export const protectedMid = (req, res, next) => { 
-  if (!req.session) { 
-    return res.status(401).redirect('/');
-  }
-
-  if (req.session.userId !== "") { 
-      next();
-  }
-  
+  const {token} = req.headers
+  if(!token) return res.status(401).send({status:"error", message:"Not authorized to perform this action"});
+  const {error, decoded} = verifyAuthToken(token);
+  if (error)return res.status(401).send({status:"error", message:"Not authorized to perform this action"});
+  const {userId} = decoded;
+  req.userId = userId
+  next();
 }
